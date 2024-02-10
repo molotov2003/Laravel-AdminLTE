@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //con el Schema podemos Crear el nombre y los campos de la tabla
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -27,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //Cuando se hace un refresh con el comando php artisan migrate:fresh todas las tablas de la base de datos se borran
+        //el metodo dropIfExist se utiliza para borrar la tabla si existe y volverla a crear
         Schema::dropIfExists('users');
     }
 };

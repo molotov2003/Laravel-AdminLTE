@@ -21,6 +21,7 @@ class DeporteSeeder extends Seeder
         // $deporte->descripcion = "deporte ";
         // $deporte->personas = random_int(0,100);
         // $deporte->save();
+        //Este metodo factory() nos sirve para insertar varios datos a las ves utilizando el factory UserFactory que ya estan los atributos 
          DeporteFactory::factory(50)->create();
     }
 }

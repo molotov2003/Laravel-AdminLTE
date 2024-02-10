@@ -16,7 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // DeporteFactory::factoryForModel(Deporte::class)->count(50)->create();
+        //Al ejecutar un factory primero se tiene que llamar el seeder principal y se utliza la funcion run 
+        //y aqui se llama el seeder que se quiera ejecuta 
+
+        //En este seeder llamamos el factory de deportes para hacer la insercion, el metodo count()elegimos la cantidad de datos 
+        // que queremos insertar
+        DeporteFactory::factoryForModel(Deporte::class)->count(50)->create();
+          //En este seeder llamamos el factory de Usuarios para hacer la insercion, el metodo count()elegimos la cantidad de datos 
+        // que queremos insertar
         UserFactory::factoryForModel(User::class)->count(50)->create();
     }
 }

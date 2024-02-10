@@ -49,7 +49,7 @@
                     </div>
                     <!-- /.card-footer -->
                     <div class="d-flex" id="btn">
-                        <form action="{{ route('dashboard.destroy', $deporte) }}" method="post">
+                        <form action="{{ route('dashboard.destroy', $deporte) }}" method="post" class="eliminar" id="eliminar" >
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger mr-2">Eliminar</button>
@@ -73,7 +73,51 @@
 
 @stop
 
+
 @section('js')
-   <script> console.log('Hi'); </script>
-   
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function(){
+            $('.eliminar').submit(function(event){
+                event.preventDefault(); 
+
+                var form = $(this);
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'Esta acción no se puede deshacer',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: form.attr('action'),
+                            data: form.serialize(),
+                            success: function(response){
+                                Swal.fire({
+                                    title: "Deporte eliminado",
+                                    text: "La página se recargará en breve",
+                                    icon: "success"
+                                }).then(function(){
+                                    location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error){
+                                Swal.fire({
+                                    title: "Error",
+                                    text: "Hubo un problema al procesar la solicitud.",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @stop

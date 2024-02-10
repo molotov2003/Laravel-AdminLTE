@@ -17,6 +17,7 @@ class Deporte extends Authenticatable
      *
      * @var array<int, string>
      */
+    //esta funcion fillable se utiliza para saber que atributos estan permitidos usar en este caso solo esto tres se pueden manipular a la hora de utilizar este modelo en el controlador  solo permite insertar desde la vista o con eloquent en la consola
     protected $fillable = [
         'name',
         'descripcion',

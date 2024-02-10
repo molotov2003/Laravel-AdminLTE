@@ -21,6 +21,8 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+     //Este factory es para definir las variables que se insertaran en el seeder
     public function definition(): array
     {
         return [

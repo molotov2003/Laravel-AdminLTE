@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        //Este metodo factory() nos sirve para insertar varios datos a las ves utilizando el factory UserFactory que ya estan los atributos 
         UserFactory::factory(50)->create();
     }
 }

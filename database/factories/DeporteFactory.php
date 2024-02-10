@@ -16,6 +16,7 @@ class DeporteFactory extends Factory
      * @return array<string, mixed>
      */
     protected $model = Deporte::class;
+    //Este factory es para definir las variables que se insertaran en el seeder
     public function definition(): array
     {
 
