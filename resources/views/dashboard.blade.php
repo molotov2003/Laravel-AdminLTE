@@ -55,7 +55,7 @@
                             <button type="submit" class="btn btn-danger mr-2">Eliminar</button>
                         </form>
                     
-                        <form action="" class="d-flex">
+                        <form action="{{route('dashboard.editarDeporte', $deporte) }}" class="d-flex">
                             <button type="submit" class="btn btn-primary">Editar</button>
                         </form>
                     </div>                  

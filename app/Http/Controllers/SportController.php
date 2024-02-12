@@ -9,9 +9,9 @@ use Psy\Readline\Hoa\Console;
 use App\Http\Controllers\Log;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-class SportController extends Controller
+class   SportController extends Controller
 {
-    //Este controlador se encarga de cagar la vista dashboard y listar todos los deportes
+    //Esta funcion se encarga de mostrar la vista dashboard y listar todos los deportes en la base de datos 
     public function index()
     {
         // Con el metodo all() Se encarga de traer todos los datos de la tabla deportes 
@@ -51,6 +51,23 @@ class SportController extends Controller
 
         return response()->json(['success' => true]);
     }
+    //Esta funcion de encarga de Mostrar la vista de editar los deportes
+    public function editarDeporte(Deporte $deporte){
+        return view('deportes.edit', compact('deporte'));
+    }
+    //Esta funcion se encarga de Edtiar deportes
+    public function editsport(Request $request, Deporte $deporte)
+    {
+        $request->validate([
+            'name' => ['required', 'min:3'],
+            'descripcion' => ['required', 'min:3'],
+            'personas' => 'required'
+        ]);
+        $deportes = Deporte::all();
+        $deporte->update($request->all());
+        return view('dashboard', compact('deportes'));
+    }
+    ///////////////////////////////////////////////////////////////////////////
     //Esta funcion sirve para listar los usuarios
     public function ListarUsuarios()
     {
@@ -89,4 +106,21 @@ class SportController extends Controller
         //retornamos la vista index  y mandamos en un array con el metodo compact para listar en la vista
         return view('usuarios.index', compact('usuarios'));
     }
+    // Con esta funcion Se abre la vista editar usuarios
+    public function editar(User  $usuario)
+    {
+       return view('usuarios.update', compact('usuario'));  
+    }
+    public function updateusuario (Request $request, User $usuario)
+    {
+        $request->validate([
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'min:3'],
+            'password' => 'required'
+        ]);
+        $usuarios = User::all();
+        $usuario->update($request->all());
+        return view('usuarios.index', compact('usuarios'));
+    }
+  
 }
