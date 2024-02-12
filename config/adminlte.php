@@ -335,13 +335,15 @@ return [
             'label'       => 1,
             'label_color' => 'success',
         ],
+        ['header' => 'Api'],
         [
-            'text'        => 'Crear Usuarios',
-            'url'         => 'dashboard/usuarios/form',
+            'text'        => 'Ver consumo API',
+            'url'         => 'dashboard/api',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 1,
             'label_color' => 'success',
         ],
+       
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

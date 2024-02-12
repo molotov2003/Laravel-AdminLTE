@@ -47,6 +47,10 @@ Route::get('dashboard/usuario/editar/{usuario}', [SportController::class, 'edita
 //En esta ruta podras Editar un usuario
 Route::put('/dashboard/editar/{usuario}', [SportController::class, 'updateusuario'])->middleware(['auth', 'verified'])->name('dashboard.editarUser');
 // Route::get('/listar', [SportController::class,'index'])->name('deportes.show');
+
+///////////////////////////Rutas para consumir un api///////////////////////////////////
+Route::get('dashboard/api', [SportController::class, 'vistaApi'])->middleware(['auth', 'verified'])->name('dashboardApi');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

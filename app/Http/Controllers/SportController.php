@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 use Psy\Readline\Hoa\Console;
 use App\Http\Controllers\Log;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use GuzzleHttp\Client as GuzzleClient; // Alias para evitar conflictos de nombres
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Client;
 
-class   SportController extends Controller
+
+class  SportController extends Controller
 {
     //Esta funcion se encarga de mostrar la vista dashboard y listar todos los deportes en la base de datos 
     public function index()
@@ -24,7 +28,7 @@ class   SportController extends Controller
     {
         //Retorno la vista para crear deportes
         return view('deportes.crear');
-    }  
+    }
     //Esta funcion se encarga de agregar datos a la tabla deportes
     public function store(Request $request)
     {
@@ -52,7 +56,8 @@ class   SportController extends Controller
         return response()->json(['success' => true]);
     }
     //Esta funcion de encarga de Mostrar la vista de editar los deportes
-    public function editarDeporte(Deporte $deporte){
+    public function editarDeporte(Deporte $deporte)
+    {
         return view('deportes.edit', compact('deporte'));
     }
     //Esta funcion se encarga de Edtiar deportes
@@ -77,11 +82,13 @@ class   SportController extends Controller
         return view('usuarios.index', compact('usuarios'));
     }
     //Esta funcion se encarga de  llevarnos a la vista de crear usuarios
-    public function showUsuarios(){
+    public function showUsuarios()
+    {
         return view('usuarios.crear');
     }
     //Esta funcion se encargar de hacer la consulta SQL a la base de datos para crear un usuario
-    public function CrearUsuario(Request $request){
+    public function CrearUsuario(Request $request)
+    {
 
         //Con el request hacemos las validaciones a los campos 
         $request->validate([
@@ -95,7 +102,7 @@ class   SportController extends Controller
         $usuario = User::create($request->all());
         //retornamos el json para manipular el desicion de el sweet alert
         return response()->json(['success' => true]);
-        }
+    }
     //Con esta funcion podemos borrar un usuario
     public function destroyUsuario(User $usuario)
     {
@@ -109,9 +116,10 @@ class   SportController extends Controller
     // Con esta funcion Se abre la vista editar usuarios
     public function editar(User  $usuario)
     {
-       return view('usuarios.update', compact('usuario'));  
+        return view('usuarios.update', compact('usuario'));
     }
-    public function updateusuario (Request $request, User $usuario)
+    //Esta funcion permite actualizar el usuario
+    public function updateusuario(Request $request, User $usuario)
     {
         $request->validate([
             'name' => ['required', 'min:3'],
@@ -122,5 +130,20 @@ class   SportController extends Controller
         $usuario->update($request->all());
         return view('usuarios.index', compact('usuarios'));
     }
-  
+    // Esta funcion permite ir a la vista api y hacer la solicitud para traer los datos de la api 
+    public function vistaApi()
+    {
+        try {
+            $client = new Client();
+            //hacemos la solicitud de los datos de el api y los  ponenos en una variable 
+            $response = $client->get('https://pokeapi.co/api/v2/pokemon/ditto');
+            // con los datos de el api en una variable lo convertimos a json 
+            $data = json_decode($response->getBody()->getContents(), true);
+            // retornamos la vista con los datos de el json
+            return view('api.consumo')->with('data', $data);
+        } catch (RequestException $e) {
+            // Manejar errores de la solicitud, como errores de red, timeout, etc.
+            return response()->json(['error' => 'Error al consumir la API: ' . $e->getMessage()], 500);
+        }
+    }
 }

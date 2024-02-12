@@ -27,41 +27,31 @@
 
 @section('content')
     <div style="text-align: center">
-        <h1>Estos son todos los deportes registrados</h1>
+        <h1>Api</h1>
     </div>
     <br>
 
     <div class="row">
-        @foreach ($deportes as $deporte)
+        @foreach ($data['game_indices'] as $gameIndex)
             <div class="col-md-4">
                 <div class="card card-container">
                     <div class="card-header">
-                        <h3 class="card-title">Nombre del deporte:{{ $deporte->name }}</h3>
+                        <h3 class="card-title">Nombre: {{ $gameIndex['version']['name'] }}</h3>
                         <div class="card-tools">
-                            <span class="badge badge-primary">Personas inscritas:{{ $deporte->personas }}</span>
+                            {{-- <span class="badge badge-primary"> Poder: </span> --}}
                         </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        Descripción: {{ $deporte->descripcion }}
+                        <a href="">ID: {{ $gameIndex['game_index'] }}</a>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        ID: {{ $deporte->id }}
+                        <a href="{{ $gameIndex['version']['url'] }}" target="_blank"> {{ $gameIndex['version']['url'] }}</a> <br>
+                    
                     </div>
                     <!-- /.card-footer -->
-                    <div class="d-flex" id="btn">
-                        <form action="{{ route('dashboard.destroy', $deporte) }}" method="post" class="eliminar"
-                            id="eliminar">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger mr-2">Eliminar</button>
-                        </form>
-
-                        <form action="{{ route('dashboard.editarDeporte', $deporte) }}" class="d-flex">
-                            <button type="submit" class="btn btn-primary">Editar</button>
-                        </form>
-                    </div>
+                    
                 </div>
             </div>
         @endforeach
